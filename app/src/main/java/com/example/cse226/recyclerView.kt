@@ -3,12 +3,11 @@ package com.example.cse226
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
-import android.widget.Adapter
-import android.widget.AdapterView
+import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 
-class recyclerView : AppCompatActivity() {
+class recyclerView : AppCompatActivity(), setOnItemClickListener {
     lateinit var arrayList: ArrayList<listItem>
     lateinit var recyclerView: RecyclerView
     lateinit var adapterRecycler: adapterRecycler
@@ -21,11 +20,12 @@ class recyclerView : AppCompatActivity() {
         Log.d("arrayList size", "ArrayList size = ${arrayList.size}")
         recyclerView = findViewById(R.id.recylerViewLinear)
         recyclerView.setHasFixedSize(true)
-
         var linearLayoutManager = LinearLayoutManager(this)
         linearLayoutManager.orientation = RecyclerView.VERTICAL
         recyclerView.layoutManager = linearLayoutManager
-        adapterRecycler = adapterRecycler(this, arrayList)
+        adapterRecycler = adapterRecycler(this, arrayList, this)
+
+
         recyclerView.adapter = adapterRecycler
 
 
@@ -44,4 +44,14 @@ class recyclerView : AppCompatActivity() {
         arrayList.add(listItem(R.drawable.fb, "Android 18", "18"))
 
     }
+
+    override fun onItemClickListener(listItem: listItem) {
+
+        Toast.makeText(
+            this,
+            listItem.version.toString() + " " + listItem.versionName.toString(),
+            Toast.LENGTH_SHORT
+        ).show()
+    }
 }
+
